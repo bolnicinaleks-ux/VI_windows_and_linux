@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ui/qml/qmldir</file>
+        <file>ui/qml/Main.qml</file>
+        <file>ui/qml/TitleBar.qml</file>
+        <file>ui/qml/Sidebar.qml</file>
+        <file>ui/qml/ChatView.qml</file>
+        <file>ui/qml/TasksView.qml</file>
+        <file>ui/qml/MetricsView.qml</file>
+        <file>ui/qml/MemoryView.qml</file>
+        <file>ui/qml/DashboardView.qml</file>
+        <file>ui/qml/SettingsView.qml</file>
+        <file>ui/qml/Theme.qml</file>
+        <file>ui/qml/CommandCenter.qml</file>
+        <file>ui/qml/components/qmldir</file>
+        <file>ui/qml/components/Card.qml</file>
+        <file>ui/qml/components/IconButton.qml</file>
+        <file>ui/qml/components/StatusBadge.qml</file>
+    </qresource>
+</RCC>
