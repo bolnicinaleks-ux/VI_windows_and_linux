@@ -26,6 +26,7 @@ void UIController::loadSettings() {
     QSettings settings("ViOrg", "ViDesktop");
     m_serverUrl = settings.value("serverUrl", "http://localhost:8000").toString();
     m_apiKey = settings.value("apiKey", "").toString();
+    m_currentTheme = settings.value("theme", "Dark Glass").toString();
 
     m_apiClient->setBaseUrl(m_serverUrl);
     m_apiClient->setApiKey(m_apiKey);
@@ -56,6 +57,19 @@ void UIController::setApiKey(const QString &key) {
         m_apiClient->setApiKey(m_apiKey);
         emit apiKeyChanged();
     }
+}
+
+void UIController::setCurrentTheme(const QString &theme) {
+    if (m_currentTheme != theme) {
+        m_currentTheme = theme;
+        QSettings settings("ViOrg", "ViDesktop");
+        settings.setValue("theme", m_currentTheme);
+        emit currentThemeChanged();
+    }
+}
+
+void UIController::setTheme(const QString &themeName) {
+    setCurrentTheme(themeName);
 }
 
 void UIController::sendMessage(const QString &message, const QString &forceModel) {

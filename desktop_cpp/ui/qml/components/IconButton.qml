@@ -5,7 +5,7 @@ import ".."
 Button {
     id: control
     property string iconText: ""
-    property color iconColor: Theme.textSecondary
+    property color iconColor: control.hovered ? Theme.textPrimary : Theme.textSecondary
     property color hoverBg: Theme.bgCardHover
     property int iconSize: 14
 
@@ -15,6 +15,9 @@ Button {
     background: Rectangle {
         color: control.hovered ? control.hoverBg : "transparent"
         radius: Theme.radiusSmall
+        border.color: control.hovered ? Theme.borderLight : "transparent"
+        border.width: 1
+        Behavior on color { ColorAnimation { duration: 150 } }
     }
 
     contentItem: Text {
@@ -23,5 +26,6 @@ Button {
         color: control.iconColor
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
+        Behavior on color { ColorAnimation { duration: 150 } }
     }
 }

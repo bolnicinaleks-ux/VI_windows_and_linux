@@ -49,9 +49,12 @@ public:
                         if (pt.x >= rect.right - borderWidth && pt.x < rect.right) { *result = HTRIGHT; return true; }
                     }
 
+                    const int rightControlAreaWidth = 280;
                     if (pt.y >= rect.top && pt.y < rect.top + titleBarHeight) {
-                        *result = HTCAPTION;
-                        return true;
+                        if (pt.x < rect.right - rightControlAreaWidth) {
+                            *result = HTCAPTION;
+                            return true;
+                        }
                     }
                     break;
                 }

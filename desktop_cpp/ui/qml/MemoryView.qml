@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import "components"
 import "."
 
 ColumnLayout {
@@ -11,7 +12,7 @@ ColumnLayout {
         spacing: 12
 
         Text {
-            text: "Долгосрочная память Vi"
+            text: "🧠 Долгосрочная память Vi"
             color: Theme.textPrimary
             font: Theme.fontTitle
         }
@@ -20,8 +21,17 @@ ColumnLayout {
 
         TextField {
             id: searchBox
-            placeholderText: "Поиск в памяти..."
-            implicitWidth: 200
+            placeholderText: "🔍 Поиск по ключу или значению..."
+            implicitWidth: 240
+            font: Theme.fontBody
+            color: Theme.textPrimary
+            placeholderTextColor: Theme.textMuted
+
+            background: Rectangle {
+                color: Theme.bgInput
+                radius: Theme.radiusMedium
+                border.color: searchBox.activeFocus ? Theme.borderFocus : Theme.borderLight
+            }
         }
     }
 
@@ -40,54 +50,70 @@ ColumnLayout {
             spacing: 8
             model: controller.memoryItems
 
-            delegate: Rectangle {
+            delegate: Item {
+                property bool matchesFilter: searchBox.text.length === 0 ||
+                                            modelData.key.toLowerCase().includes(searchBox.text.toLowerCase()) ||
+                                            modelData.value.toLowerCase().includes(searchBox.text.toLowerCase())
+
                 width: memList.width
-                implicitHeight: 56
-                radius: Theme.radiusSmall
-                color: Theme.bgCard
-                border.color: Theme.borderLight
-                visible: searchBox.text.length === 0 || modelData.key.toLowerCase().includes(searchBox.text.toLowerCase()) || modelData.value.toLowerCase().includes(searchBox.text.toLowerCase())
+                height: matchesFilter ? 62 : 0
+                visible: matchesFilter
 
-                RowLayout {
+                Rectangle {
                     anchors.fill: parent
-                    anchors.margins: 12
-                    spacing: 12
+                    radius: Theme.radiusMedium
+                    color: itemMouse.containsMouse ? Theme.bgCardHover : Theme.bgCard
+                    border.color: itemMouse.containsMouse ? Theme.borderFocus : Theme.borderLight
 
-                    Text {
-                        text: "🧠"
-                        font.pixelSize: 18
+                    MouseArea {
+                        id: itemMouse
+                        anchors.fill: parent
+                        hoverEnabled: true
                     }
 
-                    ColumnLayout {
-                        Layout.fillWidth: true
-                        spacing: 2
+                    RowLayout {
+                        anchors.fill: parent
+                        anchors.margins: 12
+                        spacing: 12
 
-                        Text {
-                            text: modelData.key
-                            color: Theme.accent
-                            font.bold: true
-                            font.pixelSize: 13
+                        Rectangle {
+                            width: 36; height: 36; radius: 10
+                            color: Theme.accentGlow
+                            border.color: Theme.accent
+                            Text { anchors.centerIn: parent; text: "🧠"; font.pixelSize: 16 }
                         }
 
-                        Text {
-                            text: modelData.value
-                            color: Theme.textPrimary
-                            font: Theme.fontBody
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            spacing: 2
+
+                            Text {
+                                text: modelData.key
+                                color: Theme.accent
+                                font: Theme.fontHeader
+                            }
+
+                            Text {
+                                text: modelData.value
+                                color: Theme.textPrimary
+                                font: Theme.fontBody
+                                elide: Text.ElideRight
+                            }
                         }
-                    }
 
-                    Rectangle {
-                        color: Theme.bgInput
-                        radius: 4
-                        implicitWidth: catText.implicitWidth + 12
-                        implicitHeight: 20
+                        Rectangle {
+                            color: Theme.bgInput
+                            radius: 6
+                            implicitWidth: catText.implicitWidth + 12
+                            implicitHeight: 24
 
-                        Text {
-                            id: catText
-                            anchors.centerIn: parent
-                            text: modelData.category
-                            color: Theme.textMuted
-                            font: Theme.fontCaption
+                            Text {
+                                id: catText
+                                anchors.centerIn: parent
+                                text: modelData.category || "General"
+                                color: Theme.textSecondary
+                                font: Theme.fontCaption
+                            }
                         }
                     }
                 }
