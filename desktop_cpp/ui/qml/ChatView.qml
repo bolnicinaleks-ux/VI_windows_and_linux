@@ -49,7 +49,7 @@ ColumnLayout {
 
             delegate: RowLayout {
                 width: chatList.width
-                alignment: modelData.sender === "user" ? Qt.AlignRight : Qt.AlignLeft
+                Layout.alignment: modelData.sender === "user" ? Qt.AlignRight : Qt.AlignLeft
 
                 Rectangle {
                     property real maxMsgWidth: chatList.width * 0.7
