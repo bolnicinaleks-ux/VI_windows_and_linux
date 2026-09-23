@@ -20,6 +20,7 @@ class UIController : public QObject {
 
     Q_PROPERTY(QString serverUrl READ serverUrl WRITE setServerUrl NOTIFY serverUrlChanged)
     Q_PROPERTY(QString apiKey READ apiKey WRITE setApiKey NOTIFY apiKeyChanged)
+    Q_PROPERTY(QString currentTheme READ currentTheme WRITE setCurrentTheme NOTIFY currentThemeChanged)
 
     Q_PROPERTY(QVariantList chatHistory READ chatHistory NOTIFY chatHistoryChanged)
     Q_PROPERTY(QVariantList tasks READ tasks NOTIFY tasksChanged)
@@ -43,6 +44,9 @@ public:
     QString apiKey() const { return m_apiKey; }
     void setApiKey(const QString &key);
 
+    QString currentTheme() const { return m_currentTheme; }
+    void setCurrentTheme(const QString &theme);
+
     QVariantList chatHistory() const { return m_chatHistory; }
     QVariantList tasks() const { return m_tasks; }
     QVariantList memoryItems() const { return m_memoryItems; }
@@ -53,12 +57,14 @@ public:
     Q_INVOKABLE void toggleTaskDone(int taskId);
     Q_INVOKABLE void refreshData();
     Q_INVOKABLE void saveSettings(const QString &url, const QString &key);
+    Q_INVOKABLE void setTheme(const QString &themeName);
     Q_INVOKABLE void clearChatHistory();
 
 signals:
     void statusChanged();
     void serverUrlChanged();
     void apiKeyChanged();
+    void currentThemeChanged();
     void chatHistoryChanged();
     void tasksChanged();
     void memoryItemsChanged();
@@ -89,6 +95,7 @@ private:
 
     QString m_serverUrl{"http://localhost:8000"};
     QString m_apiKey{""};
+    QString m_currentTheme{"Dark Glass"};
 
     QVariantList m_chatHistory;
     QVariantList m_tasks;
